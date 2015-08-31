@@ -1,4 +1,4 @@
-package net.jnmap.utils;
+package net.jnmap.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 /**
  * Created by xephyr on 8/27/15.
  */
-public class Converter {
+public class ConverterUtils {
     public static String inputStreamToString(InputStream inputStream) throws IOException {
         String line;
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

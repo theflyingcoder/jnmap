@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.halim</groupId>
-    <artifactId>jnamp</artifactId>
+    <groupId>net.jnmap</groupId>
+    <artifactId>jnmap</artifactId>
     <version>1.0</version>
 
     <dependencies>
@@ -15,12 +15,24 @@
             <version>2.2</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.4</version>
-            <type>jar</type>
-            <classifier>jdk15</classifier>
-            <scope>compile</scope>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>xom</groupId>
+            <artifactId>xom</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.36</version>
         </dependency>
     </dependencies>
     <build>
@@ -50,7 +62,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>net.jnmap.HerokuMain</mainClass>
+                            <mainClass>net.jnmap.SparkWeb</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -62,8 +74,11 @@
                 <configuration>
                     <jdkVersion>1.8</jdkVersion>
                     <appName>jnmap</appName>
+                    <includes>
+                        <include>.heroku</include>
+                    </includes>
                     <processTypes>
-                        <web>java -jar target/jnamp-1.0-jar-with-dependencies.jar</web>
+                        <web>java -jar target/jnmap-1.0-jar-with-dependencies.jar</web>
                     </processTypes>
                 </configuration>
             </plugin>
