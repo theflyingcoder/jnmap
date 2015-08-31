@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -37,13 +38,14 @@ public class MySqlScanPortResultDAO implements ScanPortResultDAO {
         try {
             connection = dataSource.getConnection();
 
-            scanPortResultStmt = connection.prepareStatement("INSERT INTO scan_port_result (scan_job_id, port, state, protocol, service) VALUES (?,?,?,?,?)");
+            scanPortResultStmt = connection.prepareStatement("INSERT INTO scan_port_result (scan_job_id, port, state, protocol, service, create_time) VALUES (?,?,?,?,?,?)");
             for (Port port : result.getPorts()) {
                 scanPortResultStmt.setLong(1, jobId);
                 scanPortResultStmt.setInt(2, port.getPort());
                 scanPortResultStmt.setString(3, port.getState());
                 scanPortResultStmt.setString(4, port.getProtocol());
                 scanPortResultStmt.setString(5, port.getService());
+                scanPortResultStmt.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
                 scanPortResultStmt.addBatch();
             }
             scanPortResultStmt.executeBatch();

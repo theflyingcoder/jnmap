@@ -49,9 +49,12 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
         ResultSet resultSet = null;
         try {
             connection = dataSource.getConnection();
-            stmt = connection.prepareStatement("INSERT INTO scan_job (target, command) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+            Timestamp createTime = new Timestamp(System.currentTimeMillis());
+            stmt = connection.prepareStatement("INSERT INTO scan_job (target, target_hash, command, create_time) VALUES (?,MD5(?),?, ?)", Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, target);
-            stmt.setString(2, command.substring(0, Math.min(command.length(), 300)));
+            stmt.setString(2, target);
+            stmt.setString(3, command.substring(0, Math.min(command.length(), 300)));
+            stmt.setTimestamp(4, createTime);
             stmt.executeUpdate();
 
             resultSet = stmt.getGeneratedKeys();
@@ -63,6 +66,7 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
             job.setId(newScanJobId);
             job.setCommand(command);
             job.setTarget(target);
+            job.setCreateTime(createTime);
         } catch (SQLException e) {
             // We can choose to throw it up but for now, since we are not doing any recovery etc,
             // print it out to stderr and return null
@@ -137,6 +141,8 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
 
     @Override
     public List<Job> get(String target, int reportDayCount) {
+        System.out.println("Retrieving scan history for "+ target + "...");
+        long startTime = System.currentTimeMillis();
         List<Job> jobList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -154,7 +160,7 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
                             "  r.service " +
                             "FROM scan_port_result r, scan_job j " +
                             "WHERE r.scan_job_id = j.scan_job_id AND " +
-                            "      j.target = ? AND " +
+                            "      j.target_hash = MD5(?) AND " +
                             "      j.create_time >= ? " +
                             "ORDER BY r.scan_job_id");
 
@@ -170,7 +176,6 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
                 while (resultSet.next()) {
                     currentJobId = resultSet.getLong(1);
                     if (currentJobId != previousJobId) {
-                        if (null != job) jobList.add(job);
                         job = new ScanJob(target);
                         job.setId(currentJobId);
                         job.setTargetStatus(resultSet.getString(2));
@@ -180,6 +185,7 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
 
                         Result result = new ScanPortResult();
                         job.setResult(result);
+                        jobList.add(job);
                     }
 
                     Port port = new Port();
@@ -189,9 +195,8 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
                     if (null != job) job.getResult().addPort(port);
                 }
             }
-            return jobList;
         } catch (SQLException e) {
-            System.err.println("Failed to retrieve job from database for target: " + target);
+            System.err.println("Failed to retrieve job from database for target: " + target + "ms");
             e.printStackTrace();
         } finally {
             if (null != connection) {
@@ -218,6 +223,7 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
                 }
             }
         }
-        return null;
+        System.out.println("Retrieving scan history for ["+target+"] took " + (System.currentTimeMillis() - startTime));
+        return jobList;
     }
 }

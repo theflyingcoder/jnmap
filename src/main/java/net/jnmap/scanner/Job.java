@@ -3,6 +3,8 @@ package net.jnmap.scanner;
 import java.io.Serializable;
 
 /**
+ * Scan Job interface
+ *
  * Created by lucas on 8/29/15.
  */
 public interface Job extends Serializable {

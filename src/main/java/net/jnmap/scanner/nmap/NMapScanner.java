@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public class NMapScanner implements Scanner {
 
-    private NMapConfig config;
+    private final NMapConfig config;
 
     /**
      * Constructor for nmap execution instance with the given config.
@@ -27,18 +27,18 @@ public class NMapScanner implements Scanner {
      * @throws NMapExecutionException
      */
     public NMapScanner(NMapConfig config) {
-        this.config = config;
-
         if (null == config) {
             throw new NMapExecutionException("Properties to NMap execution is null");
         }
+        this.config = config;
+
         if (StringUtils.isEmpty(config.getPath())) {
             throw new NMapExecutionException("Missing full path to nmap executable (NMAP_PATH)", config);
         }
     }
 
     /**
-     * Executes nmap command line call based on the config
+     * Executes nmap command line call based on the config.
      *
      * @return
      * @throws NMapExecutionException

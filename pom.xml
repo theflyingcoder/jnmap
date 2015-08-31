@@ -62,7 +62,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>net.jnmap.SparkWeb</mainClass>
+                            <mainClass>net.jnmap.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

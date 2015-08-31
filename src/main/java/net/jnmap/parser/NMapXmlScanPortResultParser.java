@@ -15,13 +15,19 @@ import java.io.StringReader;
  * <p/>
  * Created by lucas on 8/28/15.
  */
-public class NMapXmlScanPortResultParser {
+public class NMapXmlScanPortResultParser implements ScanPortResultParser {
 
 
     public NMapXmlScanPortResultParser() {
     }
 
-    public static Job parse(Job job) {
+    /**
+     * Parses the ScanJob.getOutputs() into port information.
+     *
+     * @param job
+     * @return
+     */
+    public Job parse(Job job) {
         NMapXmlXMLOutputHandler handler = new NMapXmlXMLOutputHandler(job);
         if (job == null) {
             return null;
