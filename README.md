@@ -254,6 +254,7 @@ $ cd jnmap
 $ mvn package
 $ java -jar target/jnmap-1.0-jar-with-dependencies.jar
 ```
+- Go to http://localhost:4567/
 
 To run unit tests:
   ```
