@@ -9,6 +9,7 @@ View at: [http://jnmap.herokuapp.com/](http://jnmap.herokuapp.com/)
 Features
 --------------------------------------
 - Mutiple, concurrent scan capability
+- Asynchronous both in the backend and UI requests
 - Accummulative results displayed in UI
 - Historical report from prior scans
 - REST API (scan and historical report)
