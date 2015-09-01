@@ -261,6 +261,6 @@ $CLEARDB_DATABASE_URL     | Supplied by heroku, contains full mysql database URI
 $PORT                     | Spark web server port to bind to  (Default: 4567)
 $NMAP_PATH                | Full path pointing to the nmap executable (including the nmap/nmap.exe)
 $NMAP_OPTIONS             | nmap executable options (Default: -T4 -p 0-1000) ('-oX -' will be added for xml output)
-$MAX_CONCURRENT_SCAN      | Maximum concurrent scan per request
-$MAX_TARGET_HISTORY_COUNT | Maximum number of target the history retrieval per request
+$MAX_CONCURRENT_SCAN      | Maximum concurrent scan per request (Default: 10)
+$MAX_TARGET_HISTORY_COUNT | Maximum number of target the history retrieval per request (Default: 10)
 $MAX_REPORT_DAY           | Maximum historical report day retrieval (Default: 3 days)
