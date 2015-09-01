@@ -3,6 +3,8 @@ package net.jnmap;
 import net.jnmap.data.dao.mysql.MySqlScanJobDAO;
 import net.jnmap.data.dao.mysql.MySqlScanPortResultDAO;
 import net.jnmap.parser.NMapXmlScanPortResultParser;
+import net.jnmap.scanner.Scanner;
+import net.jnmap.scanner.ScannerFactory;
 
 import javax.sql.DataSource;
 
@@ -12,7 +14,7 @@ import static spark.Spark.staticFileLocation;
 /**
  * Main class to instantiate spark web framework
  * <p/>
- * Created by lhalim on 8/27/15.
+ * Created by lucas.
  */
 public class App {
 
@@ -30,12 +32,12 @@ public class App {
 
         new ScannerResource(
                 new ScannerService(
-                        Env.scannerConfig(),
+                        ScannerFactory.createScanner(Env.scannerConfig()),
                         new MySqlScanJobDAO(dataSource),
                         new MySqlScanPortResultDAO(dataSource),
                         new NMapXmlScanPortResultParser()),
-                Env.maxScanReportDayCount(),
-                Env.maxConcurrentScan(),
-                Env.maxTargetHistoryCount());
+                Env.maxScanReportDayCountPerRequest(),
+                Env.maxConcurrentScanPerRequest(),
+                Env.maxTargetHistoryCountPerRequest());
     }
 }

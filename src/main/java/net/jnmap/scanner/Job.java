@@ -1,11 +1,12 @@
 package net.jnmap.scanner;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Scan Job interface
  *
- * Created by lucas on 8/29/15.
+ * Created by lucas.
  */
 public interface Job extends Serializable {
     String ATTR_ELAPSED = "elapsed";
@@ -36,4 +37,8 @@ public interface Job extends Serializable {
     float getElapsedSecs();
 
     String getTargetStatus();
+
+    String getCommand();
+
+    Timestamp getCreateTime();
 }

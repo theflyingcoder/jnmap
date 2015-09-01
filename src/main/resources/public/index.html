@@ -3,7 +3,6 @@
 <head>
     <title>jNmap</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <div class="navbar navbar-inverse">
@@ -28,7 +27,7 @@
                 <input type="text"
                        class="form-control"
                        id="targets"
-                       placeholder="IPs/Hostnames"
+                       placeholder="Please enter valid IPs or Hostnames (separated by comma)"
                        ng-model="targets"
                        ng-minlength="2"
                        ng-maxlength="255"
@@ -38,7 +37,7 @@
             </div>
         </div>
         <div class="control-group">
-            <button type="submit" value="scan" class="btn btn-default" ng-click="submitted=true" ng-disabled="scanForm.$invalid" ng-click="scan()">Scan</button>
+            <button type="submit" value="scan" class="btn btn-default" ng-disabled="scanForm.$invalid" ng-click="scan()">Scan</button>
             <button type="submit" value="report" class="btn btn-default" ng-disabled="scanForm.$invalid" ng-click="history()">History</button>
             <div class="pull-right">
                 <button type="submit" value="report" class="btn btn-default" ng-disabled="scanJobTargets.length == 0" ng-click="resetReports()">
@@ -51,10 +50,10 @@
 
     <div ng-show="showResults">
         <div ng-repeat="scanJobTarget in scanJobTargets">
-            <caption>Scan Target: {{scanJobTarget}}</caption>
+            <caption><h5>{{scanJobTarget}}</h5></caption>
             <table class="table table-striped">
                 <tr>
-                    <th>Scan Id (Created Time)</th>
+                    <th>Scan Id <br/> [Scan Time]</th>
                     <th ng-repeat="port in uniquePorts[scanJobTarget]">
                         Port {{port}}
                     </th>

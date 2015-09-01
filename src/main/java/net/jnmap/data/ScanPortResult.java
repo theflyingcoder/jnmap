@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Scan result containing ports information and error message if applicable.
  *
- * Created by lucas on 8/29/15.
+ * Created by lucas.
  */
 public class ScanPortResult implements Result, Serializable{
     private static final long serialVersionUID = -1984755640440073668L;

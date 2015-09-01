@@ -14,7 +14,7 @@ import static spark.SparkBase.SPARK_DEFAULT_PORT;
 /**
  * Environmental configurations
  *
- * Created by lucas on 8/30/15.
+ * Created by lucas.
  */
 public class Env {
 
@@ -91,7 +91,7 @@ public class Env {
      *
      * @return
      */
-    static int maxConcurrentScan() {
+    static int maxConcurrentScanPerRequest() {
         String limit = StringUtils.defaultString(System.getenv(ENV_MAX_TARGET_HISTORY_COUNT), DEFAULT_MAX_CONCURRENT_SCAN);
         return Integer.parseInt(limit);
     }
@@ -101,7 +101,7 @@ public class Env {
      *
      * @return
      */
-    static int maxTargetHistoryCount() {
+    static int maxTargetHistoryCountPerRequest() {
         String limit = StringUtils.defaultString(System.getenv(ENV_MAX_CONCURRENT_SCAN), DEFAULT_MAX_TARGET_HISTORY_COUNT);
         return Integer.parseInt(limit);
     }
@@ -111,7 +111,7 @@ public class Env {
      *
      * @return
      */
-    static int maxScanReportDayCount() {
+    static int maxScanReportDayCountPerRequest() {
         String limit = StringUtils.defaultString(System.getenv(ENV_MAX_REPORT_DAY), DEFAULT_MAX_REPORT_DAY);
         return Integer.parseInt(limit);
     }

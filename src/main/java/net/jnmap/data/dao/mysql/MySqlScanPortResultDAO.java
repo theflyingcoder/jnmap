@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Data Access Object for scan port result table
  * <p/>
- * Created by lucas on 8/28/15.
+ * Created by lucas.
  */
 public class MySqlScanPortResultDAO implements ScanPortResultDAO {
 
@@ -34,21 +34,21 @@ public class MySqlScanPortResultDAO implements ScanPortResultDAO {
             return;
         }
         Connection connection = null;
-        PreparedStatement scanPortResultStmt = null;
+        PreparedStatement stmt = null;
         try {
             connection = dataSource.getConnection();
 
-            scanPortResultStmt = connection.prepareStatement("INSERT INTO scan_port_result (scan_job_id, port, state, protocol, service, create_time) VALUES (?,?,?,?,?,?)");
+            stmt = connection.prepareStatement("INSERT INTO scan_port_result (scan_job_id, port, state, protocol, service, create_time) VALUES (?,?,?,?,?,?)");
             for (Port port : result.getPorts()) {
-                scanPortResultStmt.setLong(1, jobId);
-                scanPortResultStmt.setInt(2, port.getPort());
-                scanPortResultStmt.setString(3, port.getState());
-                scanPortResultStmt.setString(4, port.getProtocol());
-                scanPortResultStmt.setString(5, port.getService());
-                scanPortResultStmt.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
-                scanPortResultStmt.addBatch();
+                stmt.setLong(1, jobId);
+                stmt.setInt(2, port.getPort());
+                stmt.setString(3, port.getState());
+                stmt.setString(4, port.getProtocol());
+                stmt.setString(5, port.getService());
+                stmt.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+                stmt.addBatch();
             }
-            scanPortResultStmt.executeBatch();
+            stmt.executeBatch();
         } catch (SQLException e) {
             System.err.println("Failed to create scan port result: " + result);
             e.printStackTrace();
@@ -61,9 +61,9 @@ public class MySqlScanPortResultDAO implements ScanPortResultDAO {
                 }
             }
 
-            if (null != scanPortResultStmt) {
+            if (null != stmt) {
                 try {
-                    scanPortResultStmt.close();
+                    stmt.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

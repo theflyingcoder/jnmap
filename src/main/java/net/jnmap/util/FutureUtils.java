@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
- * Created by lucas on 8/29/15.
+ * Created by lucas.
  */
 public class FutureUtils {
 

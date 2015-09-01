@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by lucas on 8/29/15.
+ * Created by lucas.
  */
 public interface Result extends Serializable{
     List<Port> getPorts();

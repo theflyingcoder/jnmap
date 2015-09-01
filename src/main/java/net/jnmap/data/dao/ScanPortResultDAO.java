@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 /**
  *
- * Created by lucas on 8/29/15.
+ * Created by lucas.
  */
 public interface ScanPortResultDAO {
     void create(long jobId, Result result);

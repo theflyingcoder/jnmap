@@ -8,14 +8,14 @@ import java.io.Serializable;
 /**
  * Object to represent port result
  *
- * Created by lucas on 8/28/15.
+ * Created by lucas.
  */
 public class Port implements Serializable {
 
     private static final long serialVersionUID = 4094084106973942793L;
 
     public static final String TAG_PORT = "port";
-    public static final String TAG_SERVICE = "service";
+    public static final String TAG_PORT_SERVICE = "service";
     public static final String TAG_SERVICE_STATE = "state";
 
     public static final String ATTR_PROTOCOL = "protocol";

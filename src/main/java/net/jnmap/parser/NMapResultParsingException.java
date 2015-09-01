@@ -1,7 +1,7 @@
 package net.jnmap.parser;
 
 /**
- * Created by lucas on 8/28/15.
+ * Created by lucas.
  */
 public class NMapResultParsingException extends RuntimeException {
     private String outputAttempted;

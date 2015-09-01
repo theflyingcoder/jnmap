@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Data Access Object for ScanJob
  * <p/>
- * Created by lucas on 8/29/15.
+ * Created by lucas.
  */
 public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
 
@@ -58,9 +58,9 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
             stmt.executeUpdate();
 
             resultSet = stmt.getGeneratedKeys();
-            int newScanJobId = 0;
+            long newScanJobId = 0;
             if (resultSet.next()) {
-                newScanJobId = resultSet.getInt(1);
+                newScanJobId = resultSet.getLong(1);
             }
             job = new ScanJob();
             job.setId(newScanJobId);
@@ -100,6 +100,11 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
         return job;
     }
 
+    /**
+     * Update scan job object
+     *
+     * @param job
+     */
     public void update(Job job) {
         if (null == job) {
             System.err.println("Missing job object when attempt to update it to database.");
@@ -139,9 +144,16 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
         }
     }
 
+    /**
+     * Retrieves scan results by target and report day count
+     *
+     * @param target
+     * @param reportDayCount
+     * @return
+     */
     @Override
     public List<Job> get(String target, int reportDayCount) {
-        System.out.println("Retrieving scan history for "+ target + "...");
+        System.out.println("Retrieving scan history for " + target + "...");
         long startTime = System.currentTimeMillis();
         List<Job> jobList = new ArrayList<>();
         Connection connection = null;
@@ -153,7 +165,6 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
                     "SELECT " +
                             "  j.scan_job_id, " +
                             "  j.target_status, " +
-                            "  j.elapsed_secs, " +
                             "  j.create_time, " +
                             "  r.port, " +
                             "  r.state, " +
@@ -179,8 +190,7 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
                         job = new ScanJob(target);
                         job.setId(currentJobId);
                         job.setTargetStatus(resultSet.getString(2));
-                        job.setId(resultSet.getInt(3));
-                        job.setCreateTime(resultSet.getTimestamp(4));
+                        job.setCreateTime(resultSet.getTimestamp(3));
                         previousJobId = currentJobId;
 
                         Result result = new ScanPortResult();
@@ -189,9 +199,9 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
                     }
 
                     Port port = new Port();
-                    port.setPort(resultSet.getInt(5));
-                    port.setState(resultSet.getString(6));
-                    port.setService(resultSet.getString(7));
+                    port.setPort(resultSet.getInt(4));
+                    port.setState(resultSet.getString(5));
+                    port.setService(resultSet.getString(6));
                     if (null != job) job.getResult().addPort(port);
                 }
             }
@@ -223,7 +233,7 @@ public class MySqlScanJobDAO implements net.jnmap.data.dao.ScanJobDAO {
                 }
             }
         }
-        System.out.println("Retrieving scan history for ["+target+"] took " + (System.currentTimeMillis() - startTime));
+        System.out.println("Retrieving scan history for [" + target + "] took " + (System.currentTimeMillis() - startTime) + "ms");
         return jobList;
     }
 }

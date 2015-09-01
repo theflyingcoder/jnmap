@@ -13,7 +13,7 @@ import java.io.StringReader;
 /**
  * NMap result parser using SAX
  * <p/>
- * Created by lucas on 8/28/15.
+ * Created by lucas.
  */
 public class NMapXmlScanPortResultParser implements ScanPortResultParser {
 

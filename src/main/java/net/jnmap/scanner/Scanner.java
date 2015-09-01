@@ -1,7 +1,7 @@
 package net.jnmap.scanner;
 
 /**
- * Created by lucas on 8/29/15.
+ * Created by lucas.
  */
 public interface Scanner {
     /**
@@ -11,4 +11,6 @@ public interface Scanner {
      * @return
      */
     Job scan(Job job);
+
+    String getFullCommandLine(String target);
 }

@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by xephyr on 8/27/15.
+ * Created by lucas.
  */
 public class ConverterUtils {
     public static String inputStreamToString(InputStream inputStream) throws IOException {

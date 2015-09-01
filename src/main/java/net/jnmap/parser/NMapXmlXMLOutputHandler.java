@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * SAX Parser Handler to create NMapRun object from XML
  * <p/>
- * Created by lucas on 8/28/15.
+ * Created by lucas.
  */
 public class NMapXmlXMLOutputHandler extends DefaultHandler {
 
@@ -45,7 +45,7 @@ public class NMapXmlXMLOutputHandler extends DefaultHandler {
             List<Port> ports = scanPortResult.getPorts();
             Port port = ports.get(ports.size() - 1);
             port.setState(attributes.getValue(Port.ATTR_STATE));
-        } else if (Port.TAG_SERVICE.equals(qName)) {
+        } else if (Port.TAG_PORT_SERVICE.equals(qName)) {
             ScanPortResult scanPortResult = (ScanPortResult) job.getResult();
             List<Port> ports = scanPortResult.getPorts();
             ports.get(ports.size() - 1).setService(attributes.getValue(Port.ATTR_SERVICE_NAME));

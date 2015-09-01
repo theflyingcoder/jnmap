@@ -1,7 +1,7 @@
 package net.jnmap.scanner.nmap;
 
 /**
- * Created by xephyr on 8/27/15.
+ * Created by xephyr.
  */
 public class NMapExecutionException extends RuntimeException {
 

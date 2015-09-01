@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
  *     <code>target</code> is target specification for the scan
  * </p>
  *
- * Created by lucas on 8/27/15.
+ * Created by lucas.
  */
 public class NMapConfig implements Config {
 
@@ -39,8 +39,8 @@ public class NMapConfig implements Config {
      *
      * @return
      */
-    public String getFullCommandLine(String target) {
-        return getPath() + " " + addXmlOutputFlag() + " " + target;
+    public String getCommandLinePrefix() {
+        return getPath() + " " + addXmlOutputFlag();
     }
 
     /**
@@ -51,10 +51,8 @@ public class NMapConfig implements Config {
     private StringBuilder addXmlOutputFlag() {
         StringBuilder optWithXmlOutputFlag = new StringBuilder(options);
         if (!StringUtils.contains(options, "-oX")) {
-            if (StringUtils.isEmpty(options)) {
-                optWithXmlOutputFlag.append(options);
-            } else {
-                optWithXmlOutputFlag.append(options).append("-oX -");
+            if (!StringUtils.isEmpty(options)) {
+                optWithXmlOutputFlag.append(" -oX -");
             }
         }
         return optWithXmlOutputFlag;
