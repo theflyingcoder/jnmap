@@ -1,16 +1,19 @@
-var app = angular.module('jnmap', ['ngSanitize', 'ngResource']);
+var app = angular.module('jnmap', ['ngSanitize', 'ngResource', 'angularSpinner']);
 
-app.controller('ScannerCtrl', function ($scope, $http, $sce) {
+app.controller('ScannerCtrl', ['$scope', '$http', '$sce', 'usSpinnerService', function ($scope, $http, $sce, usSpinnerService) {
     /**
      * Initiates a scan
      */
     $scope.scan = function () {
+        usSpinnerService.spin('wait');
         $http.post('/scan/' + $scope.targets, "")
             .success(function (data, status, headers, config) {
                 $scope.process(data);
+                usSpinnerService.stop('wait');
 
             }).error(function (data, status, headers, config) {
                 $scope.scanForm.$invalid = true;
+                usSpinnerService.stop('wait');
             });
     };
 
@@ -18,12 +21,15 @@ app.controller('ScannerCtrl', function ($scope, $http, $sce) {
      * Retrieves historical results for past scans
      */
     $scope.history = function () {
+        usSpinnerService.spin('wait');
         $http.get('/scan/' + $scope.targets, "")
             .success(function (data, status, headers, config) {
                 $scope.process(data);
+                usSpinnerService.stop('wait');
 
             }).error(function (data, status, headers, config) {
                 $scope.scanForm.$invalid = true;
+                usSpinnerService.stop('wait');
             });
     };
 
@@ -104,7 +110,7 @@ app.controller('ScannerCtrl', function ($scope, $http, $sce) {
             var portService = $scope.portServices[target][jobPortKey];
             if (!portService) portService = 'unknown';
             if (portState) {
-                row = row + '<td>' + portState+ '<br/>[' + portService +']</td>';
+                row = row + '<td>' + portState + '<br/>[' + portService + ']</td>';
             }
             else {
                 row = row + '<td>-</td>';
@@ -132,7 +138,7 @@ app.controller('ScannerCtrl', function ($scope, $http, $sce) {
 
     $scope.resetReports();
 
-});
+}]);
 
 /**
  * Quick and dirty directive to validate scan target separated by comma, space, semicolon or pipe

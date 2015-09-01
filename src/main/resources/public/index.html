@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
+<span us-spinner="{radius:30, width:84, length: 16, lines: 18, opacity:0.08, speed:1.8, scale:0.5}" spinner-key="wait"></span>
+
 <div class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -36,9 +38,11 @@
                    maxlength="255"
                    valid-targets
                    required>
-            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="scanForm.$invalid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                  ng-show="scanForm.$invalid"></span>
             <span id="inputError2Status" class="sr-only" ng-show="scanForm.$invalid">(error)</span>
-            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="!scanForm.$invalid"></span>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                  ng-show="!scanForm.$invalid"></span>
             <span id="inputSuccess2Status" class="sr-only" ng-show="!scanForm.$invalid">(success)</span>
         </div>
         <div class="control-group">
@@ -87,5 +91,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-sanitize.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource.min.js"></script>
 <script src="js/app.js"></script>
+<script src="js/spin.min.js"></script>
+<script src="js/angular-spinner.min.js"></script>
 </body>
 </html>
