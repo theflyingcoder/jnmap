@@ -52,14 +52,16 @@
         <div ng-repeat="scanJobTarget in scanJobTargets">
             <caption><h5>{{scanJobTarget}}</h5></caption>
             <table class="table table-striped">
-                <tr>
+                <tr ng-show="!uniquePorts[scanJobTarget].length"><td>No Port Information</td></tr>
+                <tr ng-show="uniquePorts[scanJobTarget].length">
                     <th>Scan Id <br/> [Scan Time]</th>
                     <th ng-repeat="port in uniquePorts[scanJobTarget]">
                         Port {{port}}
                     </th>
                 </tr>
                 <tr ng-repeat="scanJobId in scanJobTargetIds[scanJobTarget]"
-                    ng-bind-html="renderResultRow(scanJobTarget, scanJobId)"></tr>
+                    ng-bind-html="renderResultRow(scanJobTarget, scanJobId)"
+                    ng-show="uniquePorts[scanJobTarget].length"></tr>
             </table>
             <p></p>
         </div>

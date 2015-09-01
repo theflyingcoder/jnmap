@@ -118,5 +118,8 @@ public class ScannerServiceTest {
         // If max concurrent scan reduced to 2, it should only return 2 results instead of 3
         returnedJobList = scannerService.doScan(targets, 2);
         assertEquals(2, returnedJobList.size());
+
+        returnedJobList = scannerService.doScan(targets, 0);
+        assertEquals(0, returnedJobList.size());
     }
 }

@@ -4,12 +4,14 @@ import net.jnmap.data.Port;
 import net.jnmap.data.ScanPortResult;
 import net.jnmap.data.dao.ScanPortResultDAO;
 import net.jnmap.scanner.Result;
+import org.apache.commons.collections.CollectionUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -31,6 +33,10 @@ public class MySqlScanPortResultDAO implements ScanPortResultDAO {
     public void create(long jobId, Result result) {
         if (null == result) {
             System.err.println("Missing result object when attempt to create scan port result");
+            return;
+        }
+        if (CollectionUtils.isEmpty(result.getPorts())) {
+            System.out.print("No port results for job id:" + jobId);
             return;
         }
         Connection connection = null;

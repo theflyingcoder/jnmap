@@ -8,6 +8,7 @@ import net.jnmap.scanner.Job;
 import net.jnmap.scanner.Scanner;
 import net.jnmap.scanner.ScannerFactory;
 import net.jnmap.util.FutureUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
@@ -83,11 +84,16 @@ public class ScannerService {
         // Persist the scan port results and update scan job asynchronously
         completedJobList.parallelStream()
                 .forEach(completedJob -> CompletableFuture.runAsync(() -> {
-                    // Store port scan results
-                    scanResultDAO.create(completedJob.getId(), completedJob.getResult());
+                    if (null == completedJob.getResult() || CollectionUtils.isEmpty(completedJob.getResult().getPorts())) {
+                        System.out.println("No port information for " + completedJob.getTarget());
+                    }
+                    else{
+                        // Store port scan results
+                        scanResultDAO.create(completedJob.getId(), completedJob.getResult());
 
-                    // Update scan job table with host and completion information
-                    scanJobDAO.update(completedJob);
+                        // Update scan job table with host and completion information
+                        scanJobDAO.update(completedJob);
+                    }
                 }));
         return completedJobList;
     }

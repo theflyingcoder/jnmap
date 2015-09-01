@@ -6,6 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.InetAddressValidator;
+import spark.QueryParamsMap;
 import spark.Response;
 
 import java.util.List;
@@ -85,7 +86,11 @@ public class ScannerResource {
                 return MSG_SCAN_FAILED_INVALID_TARGET;
             }
 
-            String daysStr = request.params("days");
+            QueryParamsMap dayQuery = request.queryMap("days");
+            String daysStr = StringUtils.EMPTY;
+            if (null != dayQuery) {
+                daysStr = dayQuery.value();
+            }
             int days;
             if (StringUtils.isNumeric(daysStr)) {
                 days = Integer.parseInt(daysStr);
