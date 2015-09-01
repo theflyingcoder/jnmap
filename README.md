@@ -249,7 +249,7 @@ To compile/package and run in local environment:
 - Point $CLEARDB_DATABASE_URL to MySQL instance with credentials (i.e.: mysql://user:pass@mysqlhost.name/schema_name?reconnect=true
 - Execute sql/table.sql
 - In command line:
-```
+```bash
 $ cd jnmap
 $ mvn package
 $ java -jar target/jnmap-1.0-jar-with-dependencies.jar
@@ -257,7 +257,7 @@ $ java -jar target/jnmap-1.0-jar-with-dependencies.jar
 - Go to http://localhost:4567/
 
 To run unit tests:
-  ```
+```bash
 $ cd jnmap
 $ mvn clean test 
 ```
