@@ -162,7 +162,7 @@ REST API
 
 * **Method:**
 
-  `POST`
+  `GET`
   
 *  **URL Params**
 
@@ -220,7 +220,7 @@ REST API
     $.ajax({
       url: "/scan/google.com,intel.com,localhost",
       dataType: "json",
-      type : "POST",
+      type : "GET",
       success : function(r) {
         console.log(r);
       }
