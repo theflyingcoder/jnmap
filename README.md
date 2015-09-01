@@ -12,6 +12,7 @@ Features
 - Accummulative results displayed in UI
 - Historical report from prior scans
 - REST API (scan and historical report)
+- Unit tests included
 - Build with Java 8
 - Deployable as a Heroku application
 
@@ -31,6 +32,16 @@ Depedencies
 - Mockito + PowerMockito
 - AngularJS
 - Bootstrap CSS
+- nmap executable (included in this repository is nmap compiled for heroku environment)
+
+Directory structure
+--------------------------------------
+- .heroku/vendor: contains the nmap compilations for heroku environment
+- sql: contains table script for MySQL
+- src: source folder
+- pom.xml: Maven project file
+- README.md: this page
+
 
 REST API
 --------------------------------------
@@ -228,3 +239,11 @@ REST API
       }
     });
   ```
+  
+Deployment
+------------
+To run unit tests:
+  ```
+$ cd jnmap
+$ mvn clean test install
+```
