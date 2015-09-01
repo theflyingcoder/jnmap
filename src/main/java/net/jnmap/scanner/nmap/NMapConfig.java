@@ -49,7 +49,7 @@ public class NMapConfig implements Config {
      * @return
      */
     private StringBuilder addXmlOutputFlag() {
-        StringBuilder optWithXmlOutputFlag = new StringBuilder(options);
+        StringBuilder optWithXmlOutputFlag = new StringBuilder(getOptions());
         if (!StringUtils.contains(options, "-oX")) {
             if (!StringUtils.isEmpty(options)) {
                 optWithXmlOutputFlag.append(" -oX -");

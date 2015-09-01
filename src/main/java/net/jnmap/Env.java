@@ -29,6 +29,8 @@ public class Env {
     public static final String DEFAULT_MAX_CONCURRENT_SCAN = "10";
     public static final String DEFAULT_MAX_REPORT_DAY = "3";
     public static final String DEFAULT_MAX_TARGET_HISTORY_COUNT = "10";
+    public static final String DEFAULT_NMAP_OPTIONS = "-T4 -p 0-1000 -oX -";
+    public static final String DEFAULT_NMAP_PATH = "nmap";
 
     /**
      * Initializes and supply datasource object
@@ -82,7 +84,13 @@ public class Env {
      */
     static Config scannerConfig() {
         String pathToNMap = System.getenv(ENV_NMAP_PATH);
+        if (StringUtils.isEmpty(pathToNMap)) {
+            pathToNMap = DEFAULT_NMAP_PATH;
+        }
         String nMapOptions = System.getenv(ENV_NMAP_OPTIONS);
+        if (StringUtils.isEmpty(nMapOptions)) {
+            nMapOptions = DEFAULT_NMAP_OPTIONS;
+        }
         return new NMapConfig(pathToNMap, nMapOptions);
     }
 
