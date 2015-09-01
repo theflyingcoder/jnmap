@@ -29,6 +29,8 @@ Depedencies
 - MySQL Connector
 - JUnit
 - Mockito + PowerMockito
+- AngularJS
+- Bootstrap CSS
 
 REST API
 --------------------------------------
