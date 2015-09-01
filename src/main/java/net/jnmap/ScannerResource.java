@@ -66,7 +66,7 @@ public class ScannerResource {
 
             if (CollectionUtils.isNotEmpty(invalidTarget)) {
                 response.status(403);
-                return MSG_SCAN_FAILED_INVALID_TARGET;
+                return new ErrorResponse(MSG_SCAN_FAILED_INVALID_TARGET);
             }
             return scannerService.doScan(targetArray, maxConcurrentScan);
         }, new JsonTransformer());
@@ -83,7 +83,7 @@ public class ScannerResource {
 
             if (CollectionUtils.isNotEmpty(invalidTarget)) {
                 response.status(403);
-                return MSG_SCAN_FAILED_INVALID_TARGET;
+                return new ErrorResponse(MSG_SCAN_FAILED_INVALID_TARGET);
             }
 
             QueryParamsMap dayQuery = request.queryMap("days");
@@ -102,4 +102,12 @@ public class ScannerResource {
         }, new JsonTransformer());
     }
 
+    class ErrorResponse {
+        private String error;
+
+        public ErrorResponse(String error) {
+            this.error = error;
+        }
+
+    }
 }

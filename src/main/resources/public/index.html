@@ -21,26 +21,36 @@
 
 <div class="container" ng-controller="ScannerCtrl">
     <form name="scanForm">
-        <div class="form-group">
-            <div class="controls" ng-class="{'has-error' : scanForm.$invalid}">
-                <label for="targets">Scan target(s): </label>
-                <input type="text"
-                       class="form-control"
-                       id="targets"
-                       placeholder="Please enter valid IPs or Hostnames (separated by comma)"
-                       ng-model="targets"
-                       ng-minlength="2"
-                       ng-maxlength="255"
-                       maxlength="255"
-                       valid-targets
-                       required>
-            </div>
+        <div class="form-group has-feedback" ng-class="{'has-error' : scanForm.$invalid}">
+            <label class="has-error pull-right" ng-show="scanForm.$invalid">
+                Invalid target(s)
+            </label>
+            <label class="control-label" for="targets">Scan target(s): </label>
+            <input type="text"
+                   class="form-control"
+                   id="targets"
+                   placeholder="Please enter valid IPs or Hostnames (separated by comma)"
+                   ng-model="targets"
+                   ng-minlength="2"
+                   ng-maxlength="255"
+                   maxlength="255"
+                   valid-targets
+                   required>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="scanForm.$invalid"></span>
+            <span id="inputError2Status" class="sr-only" ng-show="scanForm.$invalid">(error)</span>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="!scanForm.$invalid"></span>
+            <span id="inputSuccess2Status" class="sr-only" ng-show="!scanForm.$invalid">(success)</span>
         </div>
         <div class="control-group">
-            <button type="submit" value="scan" class="btn btn-default" ng-disabled="scanForm.$invalid" ng-click="scan()">Scan</button>
-            <button type="submit" value="report" class="btn btn-default" ng-disabled="scanForm.$invalid" ng-click="history()">History</button>
+            <button type="submit" value="scan" class="btn btn-default" ng-disabled="scanForm.$invalid"
+                    ng-click="scan()">Scan
+            </button>
+            <button type="submit" value="report" class="btn btn-default" ng-disabled="scanForm.$invalid"
+                    ng-click="history()">History
+            </button>
             <div class="pull-right">
-                <button type="submit" value="report" class="btn btn-default" ng-disabled="scanJobTargets.length == 0" ng-click="resetReports()">
+                <button type="submit" value="report" class="btn btn-default" ng-disabled="scanJobTargets.length == 0"
+                        ng-click="resetReports()">
                     Reset
                 </button>
             </div>
@@ -52,7 +62,9 @@
         <div ng-repeat="scanJobTarget in scanJobTargets">
             <caption><h5>{{scanJobTarget}}</h5></caption>
             <table class="table table-striped">
-                <tr ng-show="!uniquePorts[scanJobTarget].length"><td>No Port Information</td></tr>
+                <tr ng-show="!uniquePorts[scanJobTarget].length">
+                    <td>No Port Information</td>
+                </tr>
                 <tr ng-show="uniquePorts[scanJobTarget].length">
                     <th>Scan Id <br/> [Scan Time]</th>
                     <th ng-repeat="port in uniquePorts[scanJobTarget]">

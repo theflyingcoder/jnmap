@@ -10,7 +10,7 @@ app.controller('ScannerCtrl', function ($scope, $http, $sce) {
                 $scope.process(data);
 
             }).error(function (data, status, headers, config) {
-                $scope.status = status;
+                $scope.scanForm.$invalid = true;
             });
     };
 
@@ -23,7 +23,7 @@ app.controller('ScannerCtrl', function ($scope, $http, $sce) {
                 $scope.process(data);
 
             }).error(function (data, status, headers, config) {
-                $scope.status = status;
+                $scope.scanForm.$invalid = true;
             });
     };
 
