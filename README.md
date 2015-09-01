@@ -250,6 +250,8 @@ To compile/package and run in local environment:
 - Install and run MySql Database
 - Point $CLEARDB_DATABASE_URL to MySQL instance with credentials (i.e.: mysql://user:pass@hostname/schema_name?reconnect=true
 - Execute sql/table.sql
+- Install nmap
+- Point $NMAP_PATH to the nmap executeable
 - In command line:
 ```bash
 $ cd jnmap
