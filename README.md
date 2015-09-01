@@ -38,7 +38,7 @@ Directory structure
 --------------------------------------
 - .heroku/vendor: contains the nmap compilations for heroku environment
 - sql: contains table script for MySQL
-- src: source folder
+- src: source folder (including unit tests)
 - pom.xml: Maven project file
 - README.md: this page
 
