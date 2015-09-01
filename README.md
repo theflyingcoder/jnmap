@@ -13,8 +13,10 @@ Features
 - Historical report from prior scans
 - REST API (scan and historical report)
 - Unit tests included
+- Self contained web application using Spark
+- Port range scanned 0 to 1000 (can be configured)
 - Build with Java 8
-- Deployable as a Heroku application
+- Deployable as a cloud application (heroku)
 
 Limitation
 --------------------------------------
