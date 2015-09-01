@@ -242,10 +242,23 @@ REST API
   
 Deployment
 ------------
+To compile/package and run in local environment:
+- Install jdk 8
+- Install and setup maven
+- Install and run MyQql database
+- Point $CLEARDB_DATABASE_URL to MySQL instance with credentials (i.e.: mysql://user:pass@mysqlhost.name/schema_name?reconnect=true
+- Execute sql/table.sql
+- In command line:
+```
+$ cd jnmap
+$ mvn package
+$ java -jar target/jnmap-1.0-jar-with-dependencies.jar
+```
+
 To run unit tests:
   ```
 $ cd jnmap
-$ mvn clean test
+$ mvn clean test 
 ```
 
 In order to deploy to heroku environment heroku toolbelt needs to be installed and log into.
