@@ -243,7 +243,7 @@ REST API
 Deployment
 ------------
 To compile/package and run in local environment:
-- Install jdk 8
+- Install JDK 8
 - Install and setup maven
 - Install and run MyQql database
 - Point $CLEARDB_DATABASE_URL to MySQL instance with credentials (i.e.: mysql://user:pass@mysqlhost.name/schema_name?reconnect=true
