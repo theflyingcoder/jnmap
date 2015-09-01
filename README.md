@@ -60,7 +60,82 @@ REST API
     **Content:**
     
     ```javascript
-    [
+   [
+  {
+    "id": 292,
+    "target": "domain.com",
+    "targetStatus": "up",
+    "elapsedSecs": 4.57,
+    "createTime": "Sep 1, 2015 3:52:34 AM",
+    "result": {
+      "ports": [
+        {
+          "port": 80,
+          "state": "open",
+          "protocol": "tcp",
+          "service": "http"
+        },
+        {
+          "port": 443,
+          "state": "open",
+          "protocol": "tcp",
+          "service": "https"
+        }
+      ]
+    },
+    "outputs": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE nmaprun>...<\/nmaprun>\n",
+    "errors": ""
+  }
+] 
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 403 Forbidden <br />
+    **Content:** `{"error":"Scan failed: invalid target(s)"}`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/scan/google.com,intel.com,github.com",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+**History Retrieval**
+----
+  Retrieves historical scans including to target status, elapsed scan time, scan create time, port#s, port states and services.
+
+* **URL**
+
+  /scan/:targets
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `targets=[ipv4|ipv6|domain],[ipv4|ipv6|domain],...`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:**
+    
+    ```javascript
+[
   {
     "id": 52,
     "target": "192.168.0.1",
@@ -144,81 +219,6 @@ REST API
   ```javascript
     $.ajax({
       url: "/scan/192.168.0.1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-
-**History Retrieval**
-----
-  Retrieves historical scans including to target status, elapsed scan time, scan create time, port#s, port states and services.
-
-* **URL**
-
-  /scan/:targets
-
-* **Method:**
-
-  `GET`
-  
-*  **URL Params**
-
-   **Required:**
- 
-   `targets=[ipv4|ipv6|domain],[ipv4|ipv6|domain],...`
-
-* **Data Params**
-
-  None
-
-* **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:**
-    
-    ```javascript
-    [
-  {
-    "id": 292,
-    "target": "domain.com",
-    "targetStatus": "up",
-    "elapsedSecs": 4.57,
-    "createTime": "Sep 1, 2015 3:52:34 AM",
-    "result": {
-      "ports": [
-        {
-          "port": 80,
-          "state": "open",
-          "protocol": "tcp",
-          "service": "http"
-        },
-        {
-          "port": 443,
-          "state": "open",
-          "protocol": "tcp",
-          "service": "https"
-        }
-      ]
-    },
-    "outputs": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE nmaprun>...<\/nmaprun>\n",
-    "errors": ""
-  }
-]
-    ```
- 
-* **Error Response:**
-
-  * **Code:** 403 Forbidden <br />
-    **Content:** `{"error":"Scan failed: invalid target(s)"}`
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/scan/google.com,intel.com,localhost",
       dataType: "json",
       type : "GET",
       success : function(r) {
