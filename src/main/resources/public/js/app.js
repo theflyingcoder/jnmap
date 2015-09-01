@@ -1,20 +1,30 @@
 var app = angular.module('jnmap', ['ngSanitize', 'ngResource', 'angularSpinner']);
 
 app.controller('ScannerCtrl', ['$scope', '$http', '$sce', 'usSpinnerService', function ($scope, $http, $sce, usSpinnerService) {
+
+    /**
+     * Keep track of work count
+     */
+    $scope.workCount = 0;
+
     /**
      * Initiates a scan
      */
     $scope.scan = function () {
         usSpinnerService.spin('wait');
-        $http.post('/scan/' + $scope.targets, "")
-            .success(function (data, status, headers, config) {
-                $scope.process(data);
-                usSpinnerService.stop('wait');
-
-            }).error(function (data, status, headers, config) {
-                $scope.scanForm.$invalid = true;
-                usSpinnerService.stop('wait');
-            });
+        // Split jobs to multiple calls
+        var validTargets = $scope.targets.split(/[\s,;|]+/);
+        $scope.workCount += validTargets.length;
+        for (var idx in validTargets) {
+            $http.post('/scan/' + validTargets[idx], "")
+                .success(function (data, status, headers, config) {
+                    $scope.process(data);
+                    $scope.workDone();
+                }).error(function (data, status, headers, config) {
+                    $scope.scanForm.$invalid = true;
+                    $scope.workDone();
+                });
+        }
     };
 
     /**
@@ -22,15 +32,29 @@ app.controller('ScannerCtrl', ['$scope', '$http', '$sce', 'usSpinnerService', fu
      */
     $scope.history = function () {
         usSpinnerService.spin('wait');
-        $http.get('/scan/' + $scope.targets, "")
-            .success(function (data, status, headers, config) {
-                $scope.process(data);
-                usSpinnerService.stop('wait');
+        // Split jobs to multiple calls
+        var validTargets = $scope.targets.split(/[\s,;|]+/);
+        $scope.workCount += validTargets.length;
+        for (var idx in validTargets) {
+            $http.get('/scan/' + validTargets[idx], "")
+                .success(function (data, status, headers, config) {
+                    $scope.process(data);
+                    $scope.workDone();
+                }).error(function (data, status, headers, config) {
+                    $scope.scanForm.$invalid = true;
+                    $scope.workDone();
+                });
+        }
+    };
 
-            }).error(function (data, status, headers, config) {
-                $scope.scanForm.$invalid = true;
-                usSpinnerService.stop('wait');
-            });
+    /**
+     * Keep track of work done and stop spinner when all work is done
+     */
+    $scope.workDone = function () {
+        $scope.workCount--;
+        if ($scope.workCount == 0) {
+            usSpinnerService.stop('wait');
+        }
     };
 
     /**
@@ -92,7 +116,7 @@ app.controller('ScannerCtrl', ['$scope', '$http', '$sce', 'usSpinnerService', fu
             }
         }
         $scope.showResults = true;
-    }
+    };
 
     /**
      * Renders result row by scan targets and job Id
@@ -134,7 +158,7 @@ app.controller('ScannerCtrl', ['$scope', '$http', '$sce', 'usSpinnerService', fu
         $scope.portServices = [];
         $scope.job = [];
         $scope.scanJobCreateTime = [];
-    }
+    };
 
     $scope.resetReports();
 
