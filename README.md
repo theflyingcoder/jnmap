@@ -19,7 +19,7 @@ Features
 Limitation
 --------------------------------------
 - UI only displays port and service information.
-- More information can be harvested from nmap output if needed.
+- More information can be harvested from nmap output if needed (example: extraport)
 
 Depedencies
 --------------------------------------
