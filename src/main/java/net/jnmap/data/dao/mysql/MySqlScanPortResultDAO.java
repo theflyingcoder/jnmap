@@ -29,6 +29,12 @@ public class MySqlScanPortResultDAO implements ScanPortResultDAO {
     }
 
 
+    /**
+     * Creates new scan job entry
+     *
+     * @param jobId
+     * @param result
+     */
     @Override
     public void create(long jobId, Result result) {
         if (null == result) {

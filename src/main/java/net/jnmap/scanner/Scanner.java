@@ -1,6 +1,8 @@
 package net.jnmap.scanner;
 
 /**
+ * Scanner interface
+ *
  * Created by lucas.
  */
 public interface Scanner {

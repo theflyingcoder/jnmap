@@ -1,6 +1,8 @@
 package net.jnmap.data;
 
 import net.jnmap.scanner.Result;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,5 +41,25 @@ public class ScanPortResult implements Result, Serializable{
         return "ScanPortResult{" +
                 "ports=" + ports +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ScanPortResult that = (ScanPortResult) o;
+
+        return new EqualsBuilder()
+                .append(ports, that.ports)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(ports)
+                .toHashCode();
     }
 }

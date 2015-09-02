@@ -32,6 +32,8 @@ public class ScannerResource {
 
     final static String ACCEPTED_DELIM = "|;, ";
     final static String MSG_SCAN_FAILED_INVALID_TARGET = "Scan failed: invalid target(s)";
+    final static String MSG_SCAN_FAILED_TARGET_TOO_LONG = "Scan failed: targets string too long (limit:255 character)";
+    final static int HTTP_FORBIDDEN = 403;
 
     public ScannerResource(ScannerService scannerService,
                            int maxReportDayCount,
@@ -50,42 +52,54 @@ public class ScannerResource {
      */
     private void setupEndpoints() {
 
-        // POST Handler
-        // Scans the given delimited targets
+        /**
+         * POST Handler
+         * Scans the given delimited targets
+         */
         post("/scan/:targets", "application/json", (request, response) -> {
             String targets = request.params(":targets");
-            int targetsLength = targets.length();
-            // Prevent crazy string sizes
-            targets = targets.substring(0, Math.min(MAX_TARGET_LENGTH, targetsLength));
+            if (targets.length() > MAX_TARGET_LENGTH) {
+                response.status(HTTP_FORBIDDEN);
+                return new ErrorResponse(MSG_SCAN_FAILED_TARGET_TOO_LONG);
+            }
 
-            // Check for invalid target, if there is just say invalid target
+            // Check for invalid target
             String[] targetArray = StringUtils.split(targets, ACCEPTED_DELIM);
             List<String> invalidTarget = Stream.of(targetArray)
                     .filter(target -> !ValidatorUtils.isValidTarget(target))
                     .collect(Collectors.toList());
 
             if (CollectionUtils.isNotEmpty(invalidTarget)) {
-                response.status(403);
+                response.status(HTTP_FORBIDDEN);
                 return new ErrorResponse(MSG_SCAN_FAILED_INVALID_TARGET);
             }
             return scannerService.doScan(targetArray, maxConcurrentScan);
         }, new JsonTransformer());
 
 
-        // GET Handler
-        // Retrieves the scan results and history of the given targets
+        /**
+         * GET Handler
+         * Retrieves the scan results and history of the given targets
+         */
         get("/scan/:targets", "application/json", (request, response) -> {
             final String targets = request.params(":targets");
+            if (targets.length() > MAX_TARGET_LENGTH) {
+                response.status(HTTP_FORBIDDEN);
+                return new ErrorResponse(MSG_SCAN_FAILED_TARGET_TOO_LONG);
+            }
+
+            // Check for invalid target
             String[] targetArray = StringUtils.split(targets, ACCEPTED_DELIM);
             List<String> invalidTarget = Stream.of(targetArray)
                     .filter(target -> !ValidatorUtils.isValidTarget(target))
                     .collect(Collectors.toList());
 
             if (CollectionUtils.isNotEmpty(invalidTarget)) {
-                response.status(403);
+                response.status(HTTP_FORBIDDEN);
                 return new ErrorResponse(MSG_SCAN_FAILED_INVALID_TARGET);
             }
 
+            // Day count parameter for report retrieval
             QueryParamsMap dayQuery = request.queryMap("days");
             String daysStr = StringUtils.EMPTY;
             if (null != dayQuery) {
@@ -102,6 +116,9 @@ public class ScannerResource {
         }, new JsonTransformer());
     }
 
+    /**
+     * Error container for json formatting
+     */
     class ErrorResponse {
         private String error;
 
@@ -109,5 +126,12 @@ public class ScannerResource {
             this.error = error;
         }
 
+        public String getError() {
+            return error;
+        }
+
+        public void setError(String error) {
+            this.error = error;
+        }
     }
 }

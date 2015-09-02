@@ -25,11 +25,23 @@ public class NMapXmlXMLOutputHandler extends DefaultHandler {
     private long startParseTime;
     private long endParseTime;
 
+    /**
+     * Handles of documents
+     */
     @Override
     public void startDocument() {
         startParseTime = System.currentTimeMillis();
     }
 
+    /**
+     * Handle start of elements
+     *
+     * @param uri
+     * @param localName
+     * @param qName
+     * @param attributes
+     * @throws org.xml.sax.SAXException
+     */
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws org.xml.sax.SAXException {
         if (ScanPortResult.TAG_NMAPRUN.equals(qName)) {
@@ -57,11 +69,21 @@ public class NMapXmlXMLOutputHandler extends DefaultHandler {
         }
     }
 
+    /**
+     * Handle the end of document
+     *
+     * @throws SAXException
+     */
     @Override
     public void endDocument() throws SAXException {
         endParseTime = System.currentTimeMillis();
     }
 
+    /**
+     * Returns parsing time
+     *
+     * @return
+     */
     public long getParseTime() {
         return endParseTime - startParseTime;
     }

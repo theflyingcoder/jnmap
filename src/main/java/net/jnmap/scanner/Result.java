@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * Scan result interface
+ *
  * Created by lucas.
  */
 public interface Result extends Serializable{

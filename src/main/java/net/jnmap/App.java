@@ -3,8 +3,7 @@ package net.jnmap;
 import net.jnmap.data.dao.mysql.MySqlScanJobDAO;
 import net.jnmap.data.dao.mysql.MySqlScanPortResultDAO;
 import net.jnmap.parser.NMapXmlScanPortResultParser;
-import net.jnmap.scanner.Scanner;
-import net.jnmap.scanner.ScannerFactory;
+import net.jnmap.scanner.nmap.NMapScanner;
 
 import javax.sql.DataSource;
 
@@ -30,9 +29,10 @@ public class App {
         // Initialize data source
         final DataSource dataSource = Env.dataSource();
 
+        // Setup the application given the service and needed parameters
         new ScannerResource(
                 new ScannerService(
-                        ScannerFactory.createScanner(Env.scannerConfig()),
+                        new NMapScanner(Env.scannerConfig().getCommandLinePrefix()),
                         new MySqlScanJobDAO(dataSource),
                         new MySqlScanPortResultDAO(dataSource),
                         new NMapXmlScanPortResultParser()),

@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
  * <p>
  *     <code>pathToNMap</code> is path to point to the pathToNMap example: /usr/bin/nmap or C:/Program Files/nmap.exe
  *     <code>options</code> is scan type and options to be used to run the nmap scan
- *     <code>target</code> is target specification for the scan
  * </p>
  *
  * Created by lucas.

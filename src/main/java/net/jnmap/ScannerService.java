@@ -3,13 +3,10 @@ package net.jnmap;
 import net.jnmap.data.dao.ScanJobDAO;
 import net.jnmap.data.dao.ScanPortResultDAO;
 import net.jnmap.parser.ScanPortResultParser;
-import net.jnmap.scanner.Config;
 import net.jnmap.scanner.Job;
 import net.jnmap.scanner.Scanner;
-import net.jnmap.scanner.ScannerFactory;
 import net.jnmap.util.FutureUtils;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -78,10 +75,12 @@ public class ScannerService {
                 .map(job -> job.thenApplyAsync(scanPortResultParser::parse))
                 .collect(Collectors.<CompletableFuture<Job>>toList());
 
-        // Wait till all job completes to obtain list of job results
+        // Need to roll up the completed job list before returning to invoker. This can be done differently
+        // if we can stream results back piecemeal to client i.e. using technology like WebSocket.
         List<Job> completedJobList = FutureUtils.sequence(scanPortResultFutureList).get();
 
-        // Persist the scan port results and update scan job asynchronously
+        // Persist the scan port results and update scan job asynchronously. This can be done asynchronously because we don't need to wait
+        // for persistence to complete before returning to invoker. We can do retries and recovery here if necessary.
         completedJobList.parallelStream()
                 .forEach(completedJob -> CompletableFuture.runAsync(() -> {
                     if (null == completedJob.getResult() || CollectionUtils.isEmpty(completedJob.getResult().getPorts())) {
