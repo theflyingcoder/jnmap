@@ -3,9 +3,6 @@
 Simple port scanning application based on nmap. 
 --------------------------------------
 
-View at: [http://jnmap.herokuapp.com/](http://jnmap.herokuapp.com/)
-
-
 Features
 --------------------------------------
 - Mutiple, concurrent scan capability
