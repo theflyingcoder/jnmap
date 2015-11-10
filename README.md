@@ -1,6 +1,6 @@
 #jNmap
 
-Simple port scanning application based on nmap. This project was done as part of an interview process.
+Simple port scanning application based on nmap. 
 --------------------------------------
 
 View at: [http://jnmap.herokuapp.com/](http://jnmap.herokuapp.com/)
